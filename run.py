@@ -1,4 +1,4 @@
-import os, sys, time
+import os, sys, time, shutil, subprocess
 
 name = ""
 
@@ -34,6 +34,19 @@ while True:
 		break
 	elif cmd == "x":
 		break
+	elif cmd == "mv":
+		editorial_dir = os.path.join(os.path.expanduser("~"), "Desktop", "!editorial")
+		os.makedirs(editorial_dir, exist_ok=True)
+		shutil.move(file, editorial_dir)
+		break
+	elif cmd == "done":
+		print("oj name: ")
+		platform_name = input()
+		os.makedirs(platform_name, exist_ok=True)
+		platform_dir = os.path.abspath(platform_name)
+		shutil.move(file, platform_dir)
+		print(file + " moved")
+		break
 	elif cmd == "date":
 		f = open(file, "a")
 		ctime = os.path.getctime(file)
@@ -42,4 +55,5 @@ while True:
 		mdate = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(mtime))
 		f.write("\n//" + cdate + "\n//" + mdate)
 		f.close()
-
+	elif cmd == "link":
+		print("https://codeforces.com/contest/" + file[0:4] + "/problem/" + file[4])
